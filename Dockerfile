@@ -25,8 +25,8 @@ RUN npm ci --omit=dev
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 
-EXPOSE 3002
+EXPOSE 3000
 
-ENV PORT=3002
+ENV PORT=3000
 
 CMD ["npm", "start"]
