@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌐 Frontend Web — SOA
 
-## Getting Started
+Interfaz web construida con **Next.js 16 + React 19 + TypeScript** que consume el API Gateway para mostrar datos de 3 servicios externos.
 
-First, run the development server:
+## Páginas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+| Ruta         | Descripción                                       |
+| ------------ | ------------------------------------------------- |
+| `/`          | Landing page con acceso a los 3 servicios         |
+| `/images`    | Generador de imágenes con inteligencia artificial |
+| `/asteroids` | Explorador de asteroides cercanos a la Tierra     |
+| `/stocks`    | Consulta de precios del mercado bursátil          |
+
+## Requisitos
+
+- Node.js 20+
+- El servicio **API Gateway** corriendo en el puerto 3001
+
+## Configuración
+
+Crear archivo `.env.local` en la raíz:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3001/api
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Ejecución local
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev      # Desarrollo en http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Ejecución con Docker
 
-## Learn More
+Este servicio se levanta junto con los demás desde el `docker-compose.yml` del repo **infra**. Ver instrucciones en ese repositorio.
 
-To learn more about Next.js, take a look at the following resources:
+## Estructura
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src/
+├── app/                  # Pages (orquestadores delgados)
+│   ├── page.tsx          # Landing page
+│   ├── images/           # Generador de imágenes IA
+│   ├── asteroids/        # Asteroides NASA
+│   └── stocks/           # Mercado de valores
+├── components/           # Componentes presentacionales
+│   ├── ImageGeneratorView.tsx
+│   ├── AsteroidsView.tsx
+│   ├── StocksView.tsx
+│   ├── Navbar.tsx
+│   ├── LoadingState.tsx
+│   └── ErrorState.tsx
+├── hooks/                # Hooks personalizados
+│   └── useApi.ts         # Hook genérico para llamadas API
+├── services/             # Cliente HTTP (Axios)
+│   └── api.ts
+└── types/                # Interfaces TypeScript
+    ├── stocks.types.ts
+    ├── asteroids.types.ts
+    └── images.types.ts
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tecnologías
 
-## Deploy on Vercel
+Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 · Recharts · Lucide React · Axios
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Repositorios relacionados
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Repo                                                                 | Descripción                      |
+| -------------------------------------------------------------------- | -------------------------------- |
+| [awos-act6-c2-api](https://github.com/ArturoYJ/awos-act6-c2-api)     | API Gateway Express + TypeScript |
+| [awos-act6-c2-infra](https://github.com/ArturoYJ/awos-act6-c2-infra) | Infraestructura + Docker Compose |

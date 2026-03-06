@@ -15,10 +15,10 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-(--surface)/80 backdrop-blur-md border-b border-(--border)">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-surface/80 backdrop-blur-md border-b border-border">
       <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 text-(--foreground) font-semibold text-sm">
-          <Sparkles className="w-4 h-4 text-(--accent)" />
+        <Link href="/" className="flex items-center gap-2 text-foreground font-semibold text-sm">
+          <Sparkles className="w-4 h-4 text-accent" />
           SOA Gateway
         </Link>
         <div className="flex items-center gap-1">
@@ -28,8 +28,8 @@ export default function Navbar() {
               href={link.href}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                 pathname === link.href
-                  ? 'bg-(--accent) text-white'
-                  : 'text-(--muted) hover:text-(--foreground) hover:bg-(--accent-glow)'
+                  ? 'bg-accent text-white'
+                  : 'text-muted hover:text-foreground hover:bg-accent-glow'
               }`}
             >
               {link.label}
