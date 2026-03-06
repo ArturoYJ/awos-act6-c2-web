@@ -28,7 +28,7 @@ export default function StocksPage() {
   const [symbol, setSymbol] = useState("");
 
   const apiCall = useCallback((s: string) => api.get(`/stocks/${s}`), []);
-  const { data, loading, error, execute } = useApi<StockData>(apiCall);
+  const { data, loading, error, execute } = useApi<StockData, [string]>(apiCall);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,24 +68,24 @@ export default function StocksPage() {
         {/* Header con watermark */}
         <div className="text-center mb-10 relative">
           <TrendingUp className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 opacity-[0.03] text-[#4a90d9] pointer-events-none" />
-          <h1 className="text-4xl font-semibold tracking-tight text-[var(--foreground)] leading-tight relative">
+          <h1 className="text-4xl font-semibold tracking-tight text-(--foreground) leading-tight relative">
             Mercado de<br />
             <span style={{ color: '#4a90d9' }}>Valores</span>
           </h1>
-          <p className="mt-3 text-[var(--muted)] text-base max-w-md mx-auto leading-relaxed relative">
+          <p className="mt-3 text-(--muted) text-base max-w-md mx-auto leading-relaxed relative">
             Consulta precios diarios de cualquier acción bursátil.
           </p>
         </div>
 
         {/* Search */}
-        <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] p-6 shadow-sm mb-6">
+        <div className="bg-(--surface) rounded-2xl border border-(--border) p-6 shadow-sm mb-6">
           <form onSubmit={handleSubmit} className="flex gap-3">
             <input
               type="text"
               value={symbol}
               onChange={(e) => setSymbol(e.target.value.toUpperCase())}
               placeholder="AAPL, MSFT, TSLA, IBM..."
-              className="flex-1 px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] placeholder-[var(--muted)] outline-none input-glow transition-all text-sm font-mono tracking-wider"
+              className="flex-1 px-4 py-3 rounded-xl border border-(--border) bg-(--background) text-(--foreground) placeholder-(--muted) outline-none input-glow transition-all text-sm font-mono tracking-wider"
               disabled={loading}
               maxLength={10}
             />
@@ -107,24 +107,24 @@ export default function StocksPage() {
         {data && stats && !loading && !error && (
           <div className="animate-fade-up space-y-3">
             {/* Header con stats */}
-            <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] p-5">
+            <div className="bg-(--surface) rounded-2xl border border-(--border) p-5">
               <div className="flex items-center justify-between mb-3">
                 <div>
-                  <p className="text-2xl font-bold font-mono text-[var(--foreground)]">{data.symbol}</p>
-                  <p className="text-xs text-[var(--muted)]">Últimos 30 días · {data.time_zone}</p>
+                  <p className="text-2xl font-bold font-mono text-(--foreground)">{data.symbol}</p>
+                  <p className="text-xs text-(--muted)">Últimos 30 días · {data.time_zone}</p>
                 </div>
                 <div className="text-right">
-                  <div className={`flex items-center gap-1 justify-end ${stats.periodChange >= 0 ? 'text-[var(--success)]' : 'text-[var(--error)]'}`}>
+                  <div className={`flex items-center gap-1 justify-end ${stats.periodChange >= 0 ? 'text-(--success)' : 'text-(--error)'}`}>
                     {stats.periodChange >= 0 ? <ArrowUp className="w-4 h-4" /> : <ArrowDown className="w-4 h-4" />}
                     <span className="font-bold font-mono text-lg">{Math.abs(stats.periodChange).toFixed(2)}%</span>
                   </div>
-                  <p className="text-xs text-[var(--muted)]">en 30 días</p>
+                  <p className="text-xs text-(--muted)">en 30 días</p>
                 </div>
               </div>
 
               {/* High / Low indicator bar */}
               <div className="flex items-center gap-3 text-xs">
-                <span className="text-[var(--error)] font-mono font-medium">${stats.low.toFixed(2)}</span>
+                <span className="text-(--error) font-mono font-medium">${stats.low.toFixed(2)}</span>
                 <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden relative">
                   <div
                     className="absolute inset-y-0 rounded-full"
@@ -143,13 +143,13 @@ export default function StocksPage() {
                     }}
                   />
                 </div>
-                <span className="text-[var(--success)] font-mono font-medium">${stats.high.toFixed(2)}</span>
+                <span className="text-(--success) font-mono font-medium">${stats.high.toFixed(2)}</span>
               </div>
             </div>
 
             {/* Chart */}
-            <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] p-5">
-              <p className="text-xs text-[var(--muted)] mb-3 font-medium">Precio de cierre (USD)</p>
+            <div className="bg-(--surface) rounded-2xl border border-(--border) p-5">
+              <p className="text-xs text-(--muted) mb-3 font-medium">Precio de cierre (USD)</p>
               <ResponsiveContainer width="100%" height={220}>
                 <LineChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
@@ -191,29 +191,29 @@ export default function StocksPage() {
             </div>
 
             {/* Table */}
-            <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] overflow-hidden">
+            <div className="bg-(--surface) rounded-2xl border border-(--border) overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-[var(--background)]">
-                    <th className="text-left px-4 py-3 text-xs font-medium text-[var(--muted)]">Fecha</th>
-                    <th className="text-right px-4 py-3 text-xs font-medium text-[var(--muted)]">Apertura</th>
-                    <th className="text-right px-4 py-3 text-xs font-medium text-[var(--muted)]">Cierre</th>
-                    <th className="text-right px-4 py-3 text-xs font-medium text-[var(--muted)]">Cambio</th>
-                    <th className="text-right px-4 py-3 text-xs font-medium text-[var(--muted)] hidden sm:table-cell">Volumen</th>
+                  <tr className="bg-(--background)">
+                    <th className="text-left px-4 py-3 text-xs font-medium text-(--muted)">Fecha</th>
+                    <th className="text-right px-4 py-3 text-xs font-medium text-(--muted)">Apertura</th>
+                    <th className="text-right px-4 py-3 text-xs font-medium text-(--muted)">Cierre</th>
+                    <th className="text-right px-4 py-3 text-xs font-medium text-(--muted)">Cambio</th>
+                    <th className="text-right px-4 py-3 text-xs font-medium text-(--muted) hidden sm:table-cell">Volumen</th>
                   </tr>
                 </thead>
                 <tbody>
                   {data.daily_prices.map((day, i) => {
                     const change = getChange(day);
                     return (
-                      <tr key={day.date} className={`border-t border-[var(--border)] ${i % 2 === 0 ? '' : 'bg-[var(--background)]/50'}`}>
-                        <td className="px-4 py-3 font-mono text-xs text-[var(--foreground)]">{day.date}</td>
+                      <tr key={day.date} className={`border-t border-(--border) ${i % 2 === 0 ? '' : 'bg-(--background)/50'}`}>
+                        <td className="px-4 py-3 font-mono text-xs text-(--foreground)">{day.date}</td>
                         <td className="px-4 py-3 text-right font-mono text-xs">${parseFloat(day.open).toFixed(2)}</td>
                         <td className="px-4 py-3 text-right font-mono text-xs">${parseFloat(day.close).toFixed(2)}</td>
-                        <td className={`px-4 py-3 text-right font-mono text-xs font-semibold ${change >= 0 ? 'text-[var(--success)]' : 'text-[var(--error)]'}`}>
+                        <td className={`px-4 py-3 text-right font-mono text-xs font-semibold ${change >= 0 ? 'text-(--success)' : 'text-(--error)'}`}>
                           {change >= 0 ? '▲' : '▼'} {Math.abs(change).toFixed(2)}%
                         </td>
-                        <td className="px-4 py-3 text-right font-mono text-xs text-[var(--muted)] hidden sm:table-cell">
+                        <td className="px-4 py-3 text-right font-mono text-xs text-(--muted) hidden sm:table-cell">
                           {Number(day.volume).toLocaleString('es-MX')}
                         </td>
                       </tr>
@@ -226,7 +226,7 @@ export default function StocksPage() {
         )}
 
         {!loading && !error && !data && (
-          <div className="flex flex-col items-center py-16 text-[var(--muted)] animate-fade-up">
+          <div className="flex flex-col items-center py-16 text-(--muted) animate-fade-up">
             <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: 'rgba(74, 144, 217, 0.1)' }}>
               <TrendingUp className="w-7 h-7 opacity-60" style={{ color: '#4a90d9' }} />
             </div>
