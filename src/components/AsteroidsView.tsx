@@ -83,7 +83,7 @@ export default function AsteroidsView({ data, loading, error }: AsteroidsViewPro
                           className="h-full rounded-full transition-all duration-500"
                           style={{
                             width: `${Math.max(sizePercent, 3)}%`,
-                            backgroundColor: asteroid.is_potentially_hazardous ? 'error' : 'success'
+                            backgroundColor: asteroid.is_potentially_hazardous ? 'var(--error)' : 'var(--success)'
                           }}
                         />
                       </div>
